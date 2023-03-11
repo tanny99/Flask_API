@@ -17,7 +17,7 @@ def post_data():
     # Code for processing the input data
 #     english_text = "Hello, how are you?"
     french_translation = translator.translate(input_data, dest='fr')
-    result = {"success": True, "data": french_translation}
+    result = {"success": True, "data": french_translation.text}
     return jsonify(result)
 
 if __name__ == '__main__':
