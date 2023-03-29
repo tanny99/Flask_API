@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 app = Flask(__name__)
 from googletrans import Translator
-
+from flask_cors import CORS
 # create a translator object
 translator = Translator()
 
@@ -23,6 +23,7 @@ def post_data():
     return jsonify(result)
 
 if __name__ == '__main__':
+    CORS(app)
     app.run(debug=True)
  
 # from flask import Flask, jsonify
