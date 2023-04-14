@@ -1,7 +1,26 @@
 from flask import Flask, jsonify, request
-app = Flask(__name__)
-from googletrans import Translator
 from flask_cors import CORS
+app = Flask(__name__)
+CORS(app)
+allowed_origins = ['*', 'https://delightful-creponne-c38588.netlify.app']
+@app.before_request
+def before_request():
+    origin = request.headers.get('Origin')
+    if origin in allowed_origins:
+        headers = {
+            'Access-Control-Allow-Origin': origin,
+            'Access-Control-Allow-Headers': 'Content-Type,Authorization',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET',
+            'Access-Control-Allow-Credentials': 'true',
+            'X-Frame-Options': 'allow',
+            'X-Frame-Options': 'SAMEORIGIN'
+        }
+        if request.method == 'OPTIONS':
+            return jsonify('ok'), 200, headers
+
+    return None
+from googletrans import Translator
+
 # create a translator object
 translator = Translator()
 
@@ -23,7 +42,7 @@ def post_data():
     return jsonify(result)
 
 if __name__ == '__main__':
-    CORS(app)
+    # CORS(app)
     app.run(debug=True)
  
 # from flask import Flask, jsonify
